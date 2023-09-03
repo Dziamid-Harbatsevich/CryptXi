@@ -12,7 +12,8 @@ import "ocidl.idl";
 	uuid(1666aa0c-9d0e-4819-ad8c-98e7868dca47),
 	dual,
 	nonextensible,
-	pointer_default(unique)
+	pointer_default(unique),
+	custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "Interop.CryptXi.IATLCryptXiObject")
 ]
 interface IATLCryptXiObject : IDispatch
 {
@@ -26,7 +27,8 @@ library CryptXiATLLib
 {
 	importlib("stdole2.tlb");
 	[
-		uuid(96c33d00-9fd3-446f-97fc-c58d2af9fda9)
+		uuid(96c33d00-9fd3-446f-97fc-c58d2af9fda9),
+		custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "Interop.CryptXi.ATLCryptXiObject")
 	]
 	coclass ATLCryptXiObject
 	{

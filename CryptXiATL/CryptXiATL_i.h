@@ -7,8 +7,8 @@
 /* at Tue Jan 19 06:14:07 2038
  */
 /* Compiler settings for CryptXiATL.idl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0628 
-    protocol : all , ms_ext, c_ext, robust
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.01.0628 
+    protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
@@ -85,7 +85,7 @@ extern "C"{
 #define __IATLCryptXiObject_INTERFACE_DEFINED__
 
 /* interface IATLCryptXiObject */
-/* [unique][nonextensible][dual][uuid][object] */ 
+/* [custom][unique][nonextensible][dual][uuid][object] */ 
 
 
 EXTERN_C const IID IID_IATLCryptXiObject;
