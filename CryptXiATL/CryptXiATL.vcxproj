@@ -214,6 +214,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ATLCryptXiObject.h" />
     <ClInclude Include="CryptXiATL_i.h" />
     <ClInclude Include="dllmain.h" />
     <ClInclude Include="framework.h" />
@@ -222,6 +223,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ATLCryptXiObject.cpp" />
     <ClCompile Include="CryptXiATL.cpp" />
     <ClCompile Include="CryptXiATL_i.c">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
@@ -262,6 +264,7 @@
     <ResourceCompile Include="CryptXiATL.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ATLCryptXiObject.rgs" />
     <None Include="CryptXiATL.def" />
     <None Include="CryptXiATL.rgs" />
   </ItemGroup>

@@ -30,6 +30,10 @@
 #error this stub requires an updated version of <rpcndr.h>
 #endif /* __RPCNDR_H_VERSION__ */
 
+#ifndef COM_NO_WINDOWS_H
+#include "windows.h"
+#include "ole2.h"
+#endif /*COM_NO_WINDOWS_H*/
 
 #ifndef __CryptXiATL_i_h__
 #define __CryptXiATL_i_h__
@@ -48,13 +52,160 @@
 
 /* Forward Declarations */ 
 
+#ifndef __IATLCryptXiObject_FWD_DEFINED__
+#define __IATLCryptXiObject_FWD_DEFINED__
+typedef interface IATLCryptXiObject IATLCryptXiObject;
+
+#endif 	/* __IATLCryptXiObject_FWD_DEFINED__ */
+
+
+#ifndef __ATLCryptXiObject_FWD_DEFINED__
+#define __ATLCryptXiObject_FWD_DEFINED__
+
+#ifdef __cplusplus
+typedef class ATLCryptXiObject ATLCryptXiObject;
+#else
+typedef struct ATLCryptXiObject ATLCryptXiObject;
+#endif /* __cplusplus */
+
+#endif 	/* __ATLCryptXiObject_FWD_DEFINED__ */
+
+
 /* header files for imported files */
 #include "oaidl.h"
 #include "ocidl.h"
+#include "shobjidl.h"
 
 #ifdef __cplusplus
 extern "C"{
 #endif 
+
+
+#ifndef __IATLCryptXiObject_INTERFACE_DEFINED__
+#define __IATLCryptXiObject_INTERFACE_DEFINED__
+
+/* interface IATLCryptXiObject */
+/* [unique][nonextensible][dual][uuid][object] */ 
+
+
+EXTERN_C const IID IID_IATLCryptXiObject;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+    
+    MIDL_INTERFACE("1666aa0c-9d0e-4819-ad8c-98e7868dca47")
+    IATLCryptXiObject : public IDispatch
+    {
+    public:
+    };
+    
+    
+#else 	/* C style interface */
+
+    typedef struct IATLCryptXiObjectVtbl
+    {
+        BEGIN_INTERFACE
+        
+        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+            IATLCryptXiObject * This,
+            /* [in] */ REFIID riid,
+            /* [annotation][iid_is][out] */ 
+            _COM_Outptr_  void **ppvObject);
+        
+        DECLSPEC_XFGVIRT(IUnknown, AddRef)
+        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+            IATLCryptXiObject * This);
+        
+        DECLSPEC_XFGVIRT(IUnknown, Release)
+        ULONG ( STDMETHODCALLTYPE *Release )( 
+            IATLCryptXiObject * This);
+        
+        DECLSPEC_XFGVIRT(IDispatch, GetTypeInfoCount)
+        HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
+            IATLCryptXiObject * This,
+            /* [out] */ UINT *pctinfo);
+        
+        DECLSPEC_XFGVIRT(IDispatch, GetTypeInfo)
+        HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
+            IATLCryptXiObject * This,
+            /* [in] */ UINT iTInfo,
+            /* [in] */ LCID lcid,
+            /* [out] */ ITypeInfo **ppTInfo);
+        
+        DECLSPEC_XFGVIRT(IDispatch, GetIDsOfNames)
+        HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
+            IATLCryptXiObject * This,
+            /* [in] */ REFIID riid,
+            /* [size_is][in] */ LPOLESTR *rgszNames,
+            /* [range][in] */ UINT cNames,
+            /* [in] */ LCID lcid,
+            /* [size_is][out] */ DISPID *rgDispId);
+        
+        DECLSPEC_XFGVIRT(IDispatch, Invoke)
+        /* [local] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
+            IATLCryptXiObject * This,
+            /* [annotation][in] */ 
+            _In_  DISPID dispIdMember,
+            /* [annotation][in] */ 
+            _In_  REFIID riid,
+            /* [annotation][in] */ 
+            _In_  LCID lcid,
+            /* [annotation][in] */ 
+            _In_  WORD wFlags,
+            /* [annotation][out][in] */ 
+            _In_  DISPPARAMS *pDispParams,
+            /* [annotation][out] */ 
+            _Out_opt_  VARIANT *pVarResult,
+            /* [annotation][out] */ 
+            _Out_opt_  EXCEPINFO *pExcepInfo,
+            /* [annotation][out] */ 
+            _Out_opt_  UINT *puArgErr);
+        
+        END_INTERFACE
+    } IATLCryptXiObjectVtbl;
+
+    interface IATLCryptXiObject
+    {
+        CONST_VTBL struct IATLCryptXiObjectVtbl *lpVtbl;
+    };
+
+    
+
+#ifdef COBJMACROS
+
+
+#define IATLCryptXiObject_QueryInterface(This,riid,ppvObject)	\
+    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
+
+#define IATLCryptXiObject_AddRef(This)	\
+    ( (This)->lpVtbl -> AddRef(This) ) 
+
+#define IATLCryptXiObject_Release(This)	\
+    ( (This)->lpVtbl -> Release(This) ) 
+
+
+#define IATLCryptXiObject_GetTypeInfoCount(This,pctinfo)	\
+    ( (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo) ) 
+
+#define IATLCryptXiObject_GetTypeInfo(This,iTInfo,lcid,ppTInfo)	\
+    ( (This)->lpVtbl -> GetTypeInfo(This,iTInfo,lcid,ppTInfo) ) 
+
+#define IATLCryptXiObject_GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)	\
+    ( (This)->lpVtbl -> GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId) ) 
+
+#define IATLCryptXiObject_Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)	\
+    ( (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr) ) 
+
+
+#endif /* COBJMACROS */
+
+
+#endif 	/* C style interface */
+
+
+
+
+#endif 	/* __IATLCryptXiObject_INTERFACE_DEFINED__ */
 
 
 
@@ -66,6 +217,14 @@ extern "C"{
 
 
 EXTERN_C const IID LIBID_CryptXiATLLib;
+
+EXTERN_C const CLSID CLSID_ATLCryptXiObject;
+
+#ifdef __cplusplus
+
+class DECLSPEC_UUID("96c33d00-9fd3-446f-97fc-c58d2af9fda9")
+ATLCryptXiObject;
+#endif
 #endif /* __CryptXiATLLib_LIBRARY_DEFINED__ */
 
 /* Additional Prototypes for ALL interfaces */

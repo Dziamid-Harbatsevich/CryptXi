@@ -8,11 +8,29 @@ import "oaidl.idl";
 import "ocidl.idl";
 
 [
+	object,
+	uuid(1666aa0c-9d0e-4819-ad8c-98e7868dca47),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface IATLCryptXiObject : IDispatch
+{
+};
+[
 	uuid(134ebb80-1e1f-4efa-b1fc-67c95420c81e),
 	version(1.0),
 ]
 library CryptXiATLLib
 {
 	importlib("stdole2.tlb");
+	[
+		uuid(96c33d00-9fd3-446f-97fc-c58d2af9fda9)
+	]
+	coclass ATLCryptXiObject
+	{
+		[default] interface IATLCryptXiObject;
+	};
 };
 
+import "shobjidl.idl";

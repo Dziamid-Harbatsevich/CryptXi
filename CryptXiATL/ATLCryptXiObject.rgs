@@ -1,0 +1,26 @@
+HKCR
+{
+	CryptXi.ATLCryptXiObject.1 = s 'ATLCryptXiObject class'
+	{
+		CLSID = s '{96c33d00-9fd3-446f-97fc-c58d2af9fda9}'
+	}
+	CryptXi.ATLCryptXiObject = s 'ATLCryptXiObject class'
+	{		
+		CurVer = s 'CryptXi.ATLCryptXiObject.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {96c33d00-9fd3-446f-97fc-c58d2af9fda9} = s 'ATLCryptXiObject class'
+		{
+			ProgID = s 'CryptXi.ATLCryptXiObject.1'
+			VersionIndependentProgID = s 'CryptXi.ATLCryptXiObject'
+			ForceRemove Programmable
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			TypeLib = s '{134ebb80-1e1f-4efa-b1fc-67c95420c81e}'
+			Version = s '1.0'
+		}
+	}
+}
