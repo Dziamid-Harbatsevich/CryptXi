@@ -96,6 +96,10 @@ EXTERN_C const IID IID_IATLCryptXiObject;
     IATLCryptXiObject : public IDispatch
     {
     public:
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE SetKey( 
+            /* [in] */ BSTR key,
+            /* [retval][out] */ BSTR *result) = 0;
+        
     };
     
     
@@ -161,6 +165,12 @@ EXTERN_C const IID IID_IATLCryptXiObject;
             /* [annotation][out] */ 
             _Out_opt_  UINT *puArgErr);
         
+        DECLSPEC_XFGVIRT(IATLCryptXiObject, SetKey)
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SetKey )( 
+            IATLCryptXiObject * This,
+            /* [in] */ BSTR key,
+            /* [retval][out] */ BSTR *result);
+        
         END_INTERFACE
     } IATLCryptXiObjectVtbl;
 
@@ -197,6 +207,9 @@ EXTERN_C const IID IID_IATLCryptXiObject;
     ( (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr) ) 
 
 
+#define IATLCryptXiObject_SetKey(This,key,result)	\
+    ( (This)->lpVtbl -> SetKey(This,key,result) ) 
+
 #endif /* COBJMACROS */
 
 
@@ -228,6 +241,16 @@ ATLCryptXiObject;
 #endif /* __CryptXiATLLib_LIBRARY_DEFINED__ */
 
 /* Additional Prototypes for ALL interfaces */
+
+unsigned long             __RPC_USER  BSTR_UserSize(     unsigned long *, unsigned long            , BSTR * ); 
+unsigned char * __RPC_USER  BSTR_UserMarshal(  unsigned long *, unsigned char *, BSTR * ); 
+unsigned char * __RPC_USER  BSTR_UserUnmarshal(unsigned long *, unsigned char *, BSTR * ); 
+void                      __RPC_USER  BSTR_UserFree(     unsigned long *, BSTR * ); 
+
+unsigned long             __RPC_USER  BSTR_UserSize64(     unsigned long *, unsigned long            , BSTR * ); 
+unsigned char * __RPC_USER  BSTR_UserMarshal64(  unsigned long *, unsigned char *, BSTR * ); 
+unsigned char * __RPC_USER  BSTR_UserUnmarshal64(unsigned long *, unsigned char *, BSTR * ); 
+void                      __RPC_USER  BSTR_UserFree64(     unsigned long *, BSTR * ); 
 
 /* end of Additional Prototypes */
 

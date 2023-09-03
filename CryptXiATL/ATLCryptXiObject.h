@@ -57,6 +57,7 @@ public:
 
 
 
+	STDMETHOD(SetKey)(BSTR key, BSTR* result);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(ATLCryptXiObject), CATLCryptXiObject)

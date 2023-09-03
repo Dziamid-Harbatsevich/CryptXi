@@ -20,3 +20,12 @@ STDMETHODIMP CATLCryptXiObject::InterfaceSupportsErrorInfo(REFIID riid)
 	}
 	return S_FALSE;
 }
+
+
+STDMETHODIMP CATLCryptXiObject::SetKey(BSTR key, BSTR* result)
+{
+	// TODO: Add your implementation code here
+	*result = L"Hello from ATL!";
+
+	return S_OK;
+}

@@ -16,6 +16,7 @@ import "ocidl.idl";
 ]
 interface IATLCryptXiObject : IDispatch
 {
+	[id(1), helpstring("Set key for encryption")] HRESULT SetKey([in] BSTR key, [out, retval] BSTR* result);
 };
 [
 	uuid(134ebb80-1e1f-4efa-b1fc-67c95420c81e),
