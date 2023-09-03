@@ -1,0 +1,18 @@
+// CryptXiATL.idl : IDL source for CryptXiATL
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (CryptXiATL.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(134ebb80-1e1f-4efa-b1fc-67c95420c81e),
+	version(1.0),
+]
+library CryptXiATLLib
+{
+	importlib("stdole2.tlb");
+};
+
