@@ -26,11 +26,36 @@ STDMETHODIMP CATLCryptXiObject::SetKey(BSTR key, BSTR* result)
 {
 	// TODO: Add your implementation code here
 	// TODO: Add your implementation code here
-	CComBSTR tmp("Wow, ");
-	tmp.Append(key);
-	*result = tmp;
+	//CComBSTR tmp("Wow, ");
+	//tmp.Append(key);
+	//*result = tmp;
 
-	printf("Component::SetKey() says: %S\n", *result);
+
+
+	unsigned char keyDefault[] = "Whatever it says, it is just some code.";
+
+	Blowfish blowfish;
+	blowfish.SetKey(keyDefault, sizeof(keyDefault));
+
+	// Input/Output length must be a multiple of the block length (64bit)
+	unsigned char text[64] = "Hello World Plain Text! Hello World Plain Text! WOW!!! :)";
+
+	blowfish.Encrypt(text, text, sizeof(text));
+	printf_s("Encrypted: %s", text);
+
+	blowfish.Decrypt(text, text, sizeof(text));
+	printf_s("Decrypted: %s", text);
+
+	blowfish.Encrypt(text, text, sizeof(text));
+	printf_s("Encrypted: %s", text);
+
+	blowfish.Decrypt(text, text, sizeof(text));
+	printf_s("Decrypted: %s", text);
+
+
+
+	// Debug
+	printf("Component says: received key %s\n", keyDefault);
 
 	return S_OK;
 }

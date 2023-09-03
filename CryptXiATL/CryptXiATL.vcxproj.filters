@@ -40,6 +40,9 @@
     <ClInclude Include="ATLCryptXiObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="blowfish.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CryptXiATL.cpp">
@@ -55,6 +58,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ATLCryptXiObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="blowfish.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

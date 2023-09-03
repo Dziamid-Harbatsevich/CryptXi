@@ -215,6 +215,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ATLCryptXiObject.h" />
+    <ClInclude Include="blowfish.h" />
     <ClInclude Include="CryptXiATL_i.h" />
     <ClInclude Include="dllmain.h" />
     <ClInclude Include="framework.h" />
@@ -224,6 +225,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ATLCryptXiObject.cpp" />
+    <ClCompile Include="blowfish.cpp" />
     <ClCompile Include="CryptXiATL.cpp" />
     <ClCompile Include="CryptXiATL_i.c">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
