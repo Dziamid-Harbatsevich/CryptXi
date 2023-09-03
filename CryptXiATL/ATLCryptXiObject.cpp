@@ -25,7 +25,21 @@ STDMETHODIMP CATLCryptXiObject::InterfaceSupportsErrorInfo(REFIID riid)
 STDMETHODIMP CATLCryptXiObject::SetKey(BSTR key, BSTR* result)
 {
 	// TODO: Add your implementation code here
-	*result = L"Hello from ATL!";
+	// TODO: Add your implementation code here
+	CComBSTR tmp("Wow, ");
+	tmp.Append(key);
+	*result = tmp;
+
+	printf("Component::SetKey() says: %S\n", *result);
+
+	return S_OK;
+}
+
+
+STDMETHODIMP CATLCryptXiObject::Test(LONG x, LONG* y)
+{
+	// TODO: Add your implementation code here
+	*y = x + 3;
 
 	return S_OK;
 }

@@ -34,14 +34,19 @@ namespace CryptXiClient
             ////// TESSTING 
             ///
             var obj = new ATLCryptXiObject();
-            IATLCryptXiObject iMath = obj;
+            IATLCryptXiObject iCryptXi = obj;
 
-            //string result = obj.SetKey("Testing ATL client.");
 
-            //TestTextBlock.DataContext = result;
+            string testStr = "Testing ATL client.";
+            string result = obj.SetKey(testStr);
 
-            //Marshal.ReleaseComObject(iMath);
-            //Marshal.ReleaseComObject(obj);
+            // Debug
+            //Console.WriteLine(result);
+
+            TestTextBlock.Text = result;
+
+            Marshal.ReleaseComObject(iCryptXi);
+            Marshal.ReleaseComObject(obj);
 
 
             ///////////////////
