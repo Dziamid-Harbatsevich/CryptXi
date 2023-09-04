@@ -24,11 +24,15 @@ namespace CryptXiClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        public string PlaintText { get; set; }
+        public string EncryptedText { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
 
-
+            PlainTextBox.DataContext = PlaintText;
+            EncryptedTextBox.DataContext = EncryptedText;
 
 
             ////// TESSTING 
@@ -37,13 +41,12 @@ namespace CryptXiClient
             IATLCryptXiObject iCryptXi = obj;
 
 
-            string testStr = "Testing ATL client.";
-            string result = obj.SetKey(testStr);
+            string result = obj.SetKey(KeyTextBox.Text);
 
             // Debug
-            //Console.WriteLine(result);
+            Console.WriteLine(result);
 
-            TestTextBlock.Text = result;
+            PlainTextBox.Text = result;
 
             Marshal.ReleaseComObject(iCryptXi);
             Marshal.ReleaseComObject(obj);
