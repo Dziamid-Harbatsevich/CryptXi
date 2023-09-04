@@ -69,7 +69,7 @@ STDMETHODIMP CATLCryptXiObject::SetKey(BSTR key, BSTR* result)
 	unsigned char keyDefault[] = "Whatever it says, it is just some code.";
 
 	Blowfish blowfish;
-	blowfish.SetKey(keyChar, sizeof(keyDefault));
+	blowfish.SetKey(keyChar, sizeof(keyChar));
 
 	// Input/Output length must be a multiple of the block length (64bit)
 	unsigned char text[64] = "Hello World Plain Text! Hello World Plain Text! WOW!!! :)";
