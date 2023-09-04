@@ -100,10 +100,6 @@ EXTERN_C const IID IID_IATLCryptXiObject;
             /* [in] */ BSTR key,
             /* [retval][out] */ BSTR *result) = 0;
         
-        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE Test( 
-            /* [in] */ LONG x,
-            /* [retval][out] */ LONG *y) = 0;
-        
     };
     
     
@@ -175,12 +171,6 @@ EXTERN_C const IID IID_IATLCryptXiObject;
             /* [in] */ BSTR key,
             /* [retval][out] */ BSTR *result);
         
-        DECLSPEC_XFGVIRT(IATLCryptXiObject, Test)
-        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Test )( 
-            IATLCryptXiObject * This,
-            /* [in] */ LONG x,
-            /* [retval][out] */ LONG *y);
-        
         END_INTERFACE
     } IATLCryptXiObjectVtbl;
 
@@ -219,9 +209,6 @@ EXTERN_C const IID IID_IATLCryptXiObject;
 
 #define IATLCryptXiObject_SetKey(This,key,result)	\
     ( (This)->lpVtbl -> SetKey(This,key,result) ) 
-
-#define IATLCryptXiObject_Test(This,x,y)	\
-    ( (This)->lpVtbl -> Test(This,x,y) ) 
 
 #endif /* COBJMACROS */
 

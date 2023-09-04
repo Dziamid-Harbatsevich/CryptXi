@@ -56,11 +56,3 @@ STDMETHODIMP CATLCryptXiObject::SetKey(BSTR key, BSTR* result)
 
 	return S_OK;
 }
-
-
-STDMETHODIMP CATLCryptXiObject::Test(LONG x, LONG* y)
-{
-	*y = x + 3;
-
-	return S_OK;
-}
