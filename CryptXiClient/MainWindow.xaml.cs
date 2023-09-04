@@ -26,6 +26,7 @@ namespace CryptXiClient
     {
         public string PlaintText { get; set; }
         public string EncryptedText { get; set; }
+        private ATLCryptXiObject ComATLCryptXiObject { get; set; }
 
         public MainWindow()
         {
@@ -34,42 +35,31 @@ namespace CryptXiClient
             PlainTextBox.DataContext = PlaintText;
             EncryptedTextBox.DataContext = EncryptedText;
 
+            ComATLCryptXiObject = new ATLCryptXiObject();
 
-            ////// TESSTING 
-            ///
-            var obj = new ATLCryptXiObject();
-            IATLCryptXiObject iCryptXi = obj;
+        }
 
-
-            //string testStr = "Testing ATL client.";
-            //string result = obj.SetKey(testStr);
-
-
-            String leftString = "Left String";
-            String result = "";
-            IntPtr outStr = IntPtr.Zero;
-            //byte[] bytes = System.Text.Encoding.ASCII.GetBytes(leftString)
-            //result = obj.SetKey(bytes);
-            //String result = Marshal.PtrToStringUni(outStr);
-            Console.WriteLine("Out String = {0}", result);
-
-            // Debug
-            Console.WriteLine(result);
+        private void ButtonSetKey_Click(object sender, RoutedEventArgs e)
+        {
+            string testStr = KeyTextBox.Text;
+            string result = ComATLCryptXiObject.SetKey(testStr);
 
             PlainTextBox.Text = result;
+        }
 
+        private void ButtonEncrypt_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
 
+        private void ButtonDecrypt_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
 
-            Marshal.ReleaseComObject(iCryptXi);
-            Marshal.ReleaseComObject(obj);
-
-
-            ///////////////////
-
-
-
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Marshal.ReleaseComObject(ComATLCryptXiObject);
         }
     }
 }
