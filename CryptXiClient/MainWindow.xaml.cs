@@ -41,12 +41,26 @@ namespace CryptXiClient
             IATLCryptXiObject iCryptXi = obj;
 
 
-            string result = obj.SetKey(KeyTextBox.Text);
+            //string testStr = "Testing ATL client.";
+            //string result = obj.SetKey(testStr);
+
+
+            String leftString = "Left String";
+            String result = "";
+            IntPtr outStr = IntPtr.Zero;
+            //byte[] bytes = System.Text.Encoding.ASCII.GetBytes(leftString)
+            //result = obj.SetKey(bytes);
+            //String result = Marshal.PtrToStringUni(outStr);
+            Console.WriteLine("Out String = {0}", result);
 
             // Debug
             Console.WriteLine(result);
 
             PlainTextBox.Text = result;
+
+
+
+
 
             Marshal.ReleaseComObject(iCryptXi);
             Marshal.ReleaseComObject(obj);
