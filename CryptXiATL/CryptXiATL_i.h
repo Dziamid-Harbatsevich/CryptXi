@@ -100,6 +100,14 @@ EXTERN_C const IID IID_IATLCryptXiObject;
             /* [in] */ BSTR key,
             /* [retval][out] */ BSTR *result) = 0;
         
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE Encrypt( 
+            /* [in] */ BSTR PlainText,
+            /* [retval][out] */ BSTR *EncryptedText) = 0;
+        
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE Decrypt( 
+            /* [in] */ BSTR EncryptedText,
+            /* [retval][out] */ BSTR *DecryptedText) = 0;
+        
     };
     
     
@@ -171,6 +179,18 @@ EXTERN_C const IID IID_IATLCryptXiObject;
             /* [in] */ BSTR key,
             /* [retval][out] */ BSTR *result);
         
+        DECLSPEC_XFGVIRT(IATLCryptXiObject, Encrypt)
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Encrypt )( 
+            IATLCryptXiObject * This,
+            /* [in] */ BSTR PlainText,
+            /* [retval][out] */ BSTR *EncryptedText);
+        
+        DECLSPEC_XFGVIRT(IATLCryptXiObject, Decrypt)
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Decrypt )( 
+            IATLCryptXiObject * This,
+            /* [in] */ BSTR EncryptedText,
+            /* [retval][out] */ BSTR *DecryptedText);
+        
         END_INTERFACE
     } IATLCryptXiObjectVtbl;
 
@@ -209,6 +229,12 @@ EXTERN_C const IID IID_IATLCryptXiObject;
 
 #define IATLCryptXiObject_SetKey(This,key,result)	\
     ( (This)->lpVtbl -> SetKey(This,key,result) ) 
+
+#define IATLCryptXiObject_Encrypt(This,PlainText,EncryptedText)	\
+    ( (This)->lpVtbl -> Encrypt(This,PlainText,EncryptedText) ) 
+
+#define IATLCryptXiObject_Decrypt(This,EncryptedText,DecryptedText)	\
+    ( (This)->lpVtbl -> Decrypt(This,EncryptedText,DecryptedText) ) 
 
 #endif /* COBJMACROS */
 

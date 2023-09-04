@@ -59,6 +59,8 @@ public:
 
 
 	STDMETHOD(SetKey)(BSTR key, BSTR* result);
+	STDMETHOD(Encrypt)(BSTR PlainText, BSTR* EncryptedText);
+	STDMETHOD(Decrypt)(BSTR EncryptedText, BSTR* DecryptedText);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(ATLCryptXiObject), CATLCryptXiObject)
