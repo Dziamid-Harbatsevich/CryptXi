@@ -27,49 +27,18 @@ STDMETHODIMP CATLCryptXiObject::InterfaceSupportsErrorInfo(REFIID riid)
 
 STDMETHODIMP CATLCryptXiObject::SetKey(BSTR key, BSTR* result)
 {
-	//CComBSTR tmp("Wow, ");
-	//tmp.Append(key);
-	//*result = tmp;
+	CComBSTR tmp;
+	tmp.Append(key);
 
-	//CComBSTR tmp;
-	//tmp.Append(key);
+	//const size_t newsize = (tmp.Length() + 1) * 2;
+	//char* nstring = new char[newsize];
+	unsigned char* keyUser = {};
+	memcpy(&keyUser, &key, sizeof(key));
 
-	//_bstr_t bstrWrapper;
-	//bstrWrapper.Assign(key);
-	//WideCharToMultiByte(CP_UTF8, 0, &key[0], (int)bstrWrapper.length(), NULL, 0, NULL, NULL);
-	//unsigned char* test = bstrWrapper;
-
-	//CP_UTF8, 0, wcsString, -1,NULL, 0, NULL, NULL
-
-	//unsigned char* b = {};
-
-	// Declaration
-	//unsigned char szBuff[100];
-	//BSTR bstrVal = NULL;
-	//WideCharToMultiByte(CP_UTF8, 0, &tmp[0], (int)tmp.Length(), NULL, 0, NULL, NULL);
-	//strcpy(tmp, "codeguru.com");
-	//bstrVal = _com_util::ConvertStringToBSTR(szBuff);
-
-
-
-	// Free the allocation on variable bstrVal
-	//::SysFreeString(bstrVal);
-
-	//std::string keyStr;
-	//keyStr.append(key) //.BSTRToArray(b); // cast from string to unsigned char*
-
-
-
-	std::string keyString = ConvertBSTRToMBS(key);
-	unsigned char keyChar[448];
-
-	memcpy(&keyChar, &keyString, sizeof(keyString));
-
-
-	unsigned char keyDefault[] = "Whatever it says, it is just some code.";
+	//unsigned char keyDefault[] = "Whatever it says, it is just some code.";
 
 	Blowfish blowfish;
-	blowfish.SetKey(keyChar, sizeof(keyChar));
+	blowfish.SetKey(keyUser, sizeof(keyUser));
 
 	// Input/Output length must be a multiple of the block length (64bit)
 	unsigned char text[64] = "Hello World Plain Text! Hello World Plain Text! WOW!!! :)";
@@ -80,41 +49,10 @@ STDMETHODIMP CATLCryptXiObject::SetKey(BSTR key, BSTR* result)
 	blowfish.Decrypt(text, text, sizeof(text));
 	//printf_s("Decrypted: %s", text);
 
-	//blowfish.Encrypt(text, text, sizeof(text));
-	//printf_s("Encrypted: %s", text);
+	// Convert a _bstr_t string to a CComBSTR string.
+	CComBSTR newResult((char*)text);
 
-	//blowfish.Decrypt(text, text, sizeof(text));
-	//printf_s("Decrypted: %s", text);
-
-	//CComBSTR tmp("Wow, ");
-	//tmp.Append(text);
-	//* result = WideCharToMultiByte(text);
-
-
-
-	// Declaration
-	//WCHAR wszBuff[50];
-	//BSTR bstrVal = NULL;
-
-	// Convert from WCHAR to BSTR
-	//wcscpy_s(wszBuff, L"{ text }");
-	//bstrVal = ::SysAllocString(wszBuff);
-
-	// Some code
-
-	std::string resultStr;
-	memcpy(&resultStr, &text, sizeof(text));
-
-
-	*result = ConvertMBSToBSTR(resultStr);
-
-	// Free the allocation on variable bstrVal
-	//::SysFreeString(bstrVal);
-
-
-
-	// Debug
-	//printf("Component says: received key %s\n", keyDefault);
+	*result = newResult;
 
 	return S_OK;
 }
