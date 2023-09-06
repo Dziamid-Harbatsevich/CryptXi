@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CryptXiClient.Commands;
+using Interop.CryptXi;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -13,9 +15,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
-using System.Threading;
-using Interop.CryptXi;
 
 namespace CryptXiClient
 {
@@ -36,8 +35,27 @@ namespace CryptXiClient
             EncryptedTextBox.DataContext = EncryptedText;
 
             ComATLCryptXiObject = new ATLCryptXiObject();
-
+            DataContext = this;
         }
+
+        private RelayCommand newCommand;
+        public ICommand NewCommand => newCommand ??= new RelayCommand(NewExecute);
+
+        private void NewExecute(object commandParameter)
+        {
+            KeyTextBox.Text = "";
+            PlainTextBox.Text = "";
+            EncryptedTextBox.Text = "";
+        }
+
+        private RelayCommand exitAppCommand;
+        public ICommand ExitAppCommand => exitAppCommand ??= new RelayCommand(ExitAppExecute);
+
+        private void ExitAppExecute(object commandParameter)
+        {
+            App.Current.Shutdown();
+        }
+
 
         private void ButtonSetKey_Click(object sender, RoutedEventArgs e)
         {

@@ -16,17 +16,17 @@ namespace CryptXiConsoleClient
         {
             var ComATLCryptXiObject = new ATLCryptXiObject();
 
-            string key = "Some test key";
+            string key = "Some test key from client";
             string textPlain = "Some plain text";
 
-            string result = ComATLCryptXiObject.SetKey(key);
+            var result = ComATLCryptXiObject.SetKey(key);
             Console.WriteLine($"Client key: {result}");
 
-            string encryptedText = ComATLCryptXiObject.Encrypt(textPlain);
-            Console.WriteLine($"Client encryptedText: {encryptedText}");
+            //string encryptedText = ComATLCryptXiObject.Encrypt(textPlain);
+            //Console.WriteLine($"Client encryptedText: {encryptedText}");
 
-            string decryptedText = ComATLCryptXiObject.Decrypt(encryptedText);
-            Console.WriteLine($"Client decryptedText: {decryptedText}");
+            //string decryptedText = ComATLCryptXiObject.Decrypt(encryptedText);
+            //Console.WriteLine($"Client decryptedText: {decryptedText}");
 
 
             Console.ReadLine();

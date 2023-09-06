@@ -3,13 +3,35 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:CryptXiClient"
-        Closing="MainWindow_Closing"
+        xmlns:fas="http://schemas.fontawesome.com/icons/"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="CryptXi" Height="450" Width="800">
 
-    <Grid>
+
+
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="New" Command="{Binding NewCommand}">
+                    <MenuItem.Icon>
+                        <fas:FontAwesome Icon="Solid_Snowplow" FontSize="12" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="ExitApp" Command="{Binding ExitAppCommand}">
+                    <MenuItem.Icon>
+                        <fas:FontAwesome Icon="Solid_DoorOpen" FontSize="12" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Command="Cut" />
+                <MenuItem Command="Copy" />
+                <MenuItem Command="Paste" />
+            </MenuItem>
+        </Menu>
+
         <StackPanel>
             <TextBox x:Name="KeyTextBox" Text="Key"></TextBox>
             <TextBox x:Name="PlainTextBox" Text="Plain text"></TextBox>
@@ -18,5 +40,6 @@
             <Button Content="Encrypt" Click="ButtonEncrypt_Click"/>
             <Button Content="Decrypt" Click="ButtonDecrypt_Click"/>
         </StackPanel>
-    </Grid>
+    </DockPanel>
+
 </Window>
