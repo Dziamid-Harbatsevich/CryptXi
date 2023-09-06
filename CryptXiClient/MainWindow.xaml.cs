@@ -23,6 +23,7 @@ namespace CryptXiClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        public string KeyText { get; set; }
         public string PlaintText { get; set; }
         public string EncryptedText { get; set; }
         private ATLCryptXiObject ComATLCryptXiObject { get; set; }
@@ -31,6 +32,7 @@ namespace CryptXiClient
         {
             InitializeComponent();
 
+            KeyTextBox.DataContext = KeyText;
             PlainTextBox.DataContext = PlaintText;
             EncryptedTextBox.DataContext = EncryptedText;
 
@@ -80,9 +82,20 @@ namespace CryptXiClient
             Marshal.ReleaseComObject(ComATLCryptXiObject);
         }
 
+        private void KeyTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            KeyTextSizeTextBlock.Text = (System.Text.ASCIIEncoding.Unicode.GetByteCount(KeyTextBox.Text) * 8).ToString();
+            //KeyTextSizeTextBlock.Text = KeyTextBox.Text.Length.ToString();
+        }
+
         private void PlainTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             PlainTextSizeTextBlock.Text = PlainTextBox.Text.Length.ToString();
+        }
+
+        private void EncryptedTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            EncryptedTextSizeTextBlock.Text = EncryptedTextBox.Text.Length.ToString();
         }
     }
 }

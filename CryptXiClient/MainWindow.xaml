@@ -38,13 +38,27 @@
         <StackPanel Margin="7">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <StackPanel Width="250" Margin="10">
-                    <TextBox x:Name="KeyTextBox" Text="Key" Margin="5" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
-                    <Button Content="Set Key" Margin="5" Click="ButtonSetKey_Click"/>
+                    <StackPanel Margin="2" Orientation="Horizontal">
+                        <TextBlock Text="Key Size (&lt;448 bits):" Margin="0,0,3,0" FontSize="14"/>
+                        <TextBlock x:Name="KeyTextSizeTextBlock" Text=""/>
+                    </StackPanel>
+                    <TextBox x:Name="KeyTextBox"
+                             Text="Key"
+                             Margin="5"
+                             Padding="3"
+                             MaxLength="28"
+                             TextChanged="KeyTextBox_TextChanged"
+                             BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                    <Button Content="Set Key" Margin="5" Padding="2" Click="ButtonSetKey_Click"/>
                 </StackPanel>
-                <StackPanel Width="250" Margin="10" materialDesign:BottomDashedLineAdorner.Brush="Black">
+                <StackPanel Width="300" Margin="10" materialDesign:BottomDashedLineAdorner.Brush="Black">
                     <StackPanel Margin="5" Orientation="Horizontal">
-                        <TextBlock Text="Plain Text Size (symbols):" Margin="0,0,3,0"/>
+                        <TextBlock Text="Plain Text Size (chars):" Margin="0,0,3,0"/>
                         <TextBlock x:Name="PlainTextSizeTextBlock" Text=""/>
+                    </StackPanel>
+                    <StackPanel Margin="5" Orientation="Horizontal">
+                        <TextBlock Text="Encrypted Text Size (chars):" Margin="0,0,3,0"/>
+                        <TextBlock x:Name="EncryptedTextSizeTextBlock" Text=""/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
@@ -59,12 +73,20 @@
                          AcceptsReturn="True"
                          TextWrapping="WrapWithOverflow"
                          VerticalScrollBarVisibility="Auto"/>
-                <Button Margin="10 0 0 0" Width="70" Height="30" Content="Encrypt" Click="ButtonEncrypt_Click" Padding="4"/>
+                <Button Margin="10 0 0 0" Width="75" Height="40" Content="Encrypt" Foreground="Red" FontWeight="Bold" Click="ButtonEncrypt_Click" Padding="4"/>
             </StackPanel>
 
             <StackPanel Width="600" Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="0,10,0,0">
-                <TextBox x:Name="EncryptedTextBox" Width="510" Height="130" Text="Encrypted text" FontFamily="Verdana" AcceptsReturn="True" TextWrapping="WrapWithOverflow" VerticalScrollBarVisibility="Auto"/>
-                <Button Margin="10 0 0 0" Height="30" Content="Decrypt" Click="ButtonDecrypt_Click" Padding="4"/>
+                <TextBox x:Name="EncryptedTextBox"
+                         Width="510"
+                         Height="130"
+                         Text="Encrypted text"
+                         FontFamily="Verdana"
+                         TextChanged="EncryptedTextBox_TextChanged"
+                         AcceptsReturn="True"
+                         TextWrapping="WrapWithOverflow"
+                         VerticalScrollBarVisibility="Auto"/>
+                <Button Margin="10 0 0 0" Width="75" Height="40" Content="Decrypt" Foreground="Green" FontWeight="Bold" Click="ButtonDecrypt_Click" Padding="4"/>
             </StackPanel>
 
         </StackPanel>
