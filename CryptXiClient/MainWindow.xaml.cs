@@ -168,23 +168,40 @@ namespace CryptXiClient
 
         private void ImportKeyExecute(object commandParameter)
         {
-            MessageBox.Show(commandParameter?.ToString(), "ImportKeyExecute");
+            string initialDir = Filesystem.NewOrDefaultFolder(KEYS_DIR_NAME);
 
-            //// Configure open file dialog box
-            //var dialog = new Microsoft.Win32.OpenFileDialog();
-            //dialog.FileName = "Document"; // Default file name
-            //dialog.DefaultExt = ".txt"; // Default file extension
-            //dialog.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
+            // Configure open file dialog box
+            var dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.InitialDirectory = initialDir;
+            dialog.FileName = "Document"; // Default file name
+            dialog.DefaultExt = ".txt"; // Default file extension
+            dialog.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
 
-            //// Show open file dialog box
-            //bool? result = dialog.ShowDialog();
+            // Show open file dialog box
+            bool? result = dialog.ShowDialog();
 
-            //// Process open file dialog box results
-            //if (result == true)
-            //{
-            //    // Open document
-            //    string filename = dialog.FileName;
-            //}
+            // Process open file dialog box results
+            if (result == true)
+            {
+                // Open document
+                string filename = dialog.FileName;
+                // Write the content to file
+                using (StreamReader inputFile = new StreamReader(filename))
+                {
+                    var input = inputFile.ReadToEnd();
+                    if (input.ToString().Length > 0)
+                    {
+                        KeyTextBox.Text = input.ToString();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Content not found.",
+                            "Error",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error);
+                    }
+                }
+            }
         }
 
         private RelayCommand exportKeyCommand;
@@ -192,7 +209,7 @@ namespace CryptXiClient
 
         private void ExportKeyExecute(object commandParameter)
         {
-            string initialDir = Filesystem.NewOrCreateFolder(KEYS_DIR_NAME);
+            string initialDir = Filesystem.NewOrDefaultFolder(KEYS_DIR_NAME);
 
             // Configure save file dialog box
             var dialog = new Microsoft.Win32.SaveFileDialog();
@@ -217,7 +234,7 @@ namespace CryptXiClient
             }
         }
 
-        #endregion File-> Commands
+        #endregion File->Commands
 
         #region General commands
 

@@ -17,7 +17,7 @@ namespace CryptXiClient.Utils
             return Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), KEYS_DIR_NAME);
         }
 
-        public static string NewOrCreateFolder(string dirName)
+        public static string NewOrDefaultFolder(string dirName)
         {
             var dirCurrent = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             var dirNew = Path.Combine(dirCurrent, dirName);
