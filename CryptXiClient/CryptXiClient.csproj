@@ -124,6 +124,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Utils\Filesystem.cs" />
     <Compile Include="Utils\GenerateRandomString.cs" />
     <COMReference Include="CryptXiATLLib">
       <WrapperTool>tlbimp</WrapperTool>

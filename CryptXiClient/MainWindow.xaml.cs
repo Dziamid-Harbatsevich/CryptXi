@@ -31,6 +31,8 @@ namespace CryptXiClient
     public partial class MainWindow : Window
     {
         const int MAX_CHAR_KEY_LENGTH = 28;
+        const string KEYS_DIR_NAME = "keys";
+
         private string keyText;
         public string KeyText
         {
@@ -190,23 +192,29 @@ namespace CryptXiClient
 
         private void ExportKeyExecute(object commandParameter)
         {
-            MessageBox.Show(commandParameter?.ToString(), "ExportKeyExecute");
+            string initialDir = Filesystem.NewOrCreateFolder(KEYS_DIR_NAME);
 
-            //// Configure save file dialog box
-            //var dialog = new Microsoft.Win32.SaveFileDialog();
-            //dialog.FileName = "Document"; // Default file name
-            //dialog.DefaultExt = ".txt"; // Default file extension
-            //dialog.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
+            // Configure save file dialog box
+            var dialog = new Microsoft.Win32.SaveFileDialog();
+            dialog.InitialDirectory = initialDir;
+            dialog.FileName = "key_" + DateTime.Now.ToFileTimeUtc();   // Default file name
+            dialog.DefaultExt = ".txt";     // Default file extension
+            dialog.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
 
-            //// Show save file dialog box
-            //bool? result = dialog.ShowDialog();
+            // Show save file dialog box
+            bool? result = dialog.ShowDialog();
 
-            //// Process save file dialog box results
-            //if (result == true)
-            //{
-            //    // Save document
-            //    string filename = dialog.FileName;
-            //}
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save document
+                string filename = dialog.FileName;
+                // Write the content to file
+                using (StreamWriter outputFile = new StreamWriter(filename))
+                {
+                    outputFile.Write(KeyTextBox.Text);
+                }
+            }
         }
 
         #endregion File-> Commands

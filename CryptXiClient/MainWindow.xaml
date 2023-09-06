@@ -148,24 +148,6 @@
                 </Button>
 
             </StackPanel>
-
-            <ToggleButton x:Name="TogglePopupButton" Height="30" Width="150" HorizontalAlignment="Left">
-                <StackPanel>
-                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Run Text="Is button toggled? " />
-            <Run Text="{Binding IsChecked, ElementName=TogglePopupButton}" />
-                    </TextBlock>
-
-                    <Popup Name="myPopup" IsOpen="{Binding IsChecked, ElementName=TogglePopupButton}">
-                        <Border BorderThickness="1">
-                            <TextBlock Name="myPopupText" Background="LightBlue" Foreground="Blue" Padding="30">
-                Popup Text
-                            </TextBlock>
-                        </Border>
-                    </Popup>
-                </StackPanel>
-            </ToggleButton>
-
         </StackPanel>
     </DockPanel>
 
