@@ -79,5 +79,10 @@ namespace CryptXiClient
         {
             Marshal.ReleaseComObject(ComATLCryptXiObject);
         }
+
+        private void PlainTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            PlainTextSizeTextBlock.Text = PlainTextBox.Text.Length.ToString();
+        }
     }
 }
