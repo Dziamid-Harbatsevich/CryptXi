@@ -61,20 +61,27 @@ namespace CryptXiClient
 
         private void ButtonSetKey_Click(object sender, RoutedEventArgs e)
         {
-            string testStr = KeyTextBox.Text;
-            string result = ComATLCryptXiObject.SetKey(testStr);
+            string str = KeyTextBox.Text;
+            string result = ComATLCryptXiObject.SetKey(str);
 
+            // Debug
             PlainTextBox.Text = result;
         }
 
         private void ButtonEncrypt_Click(object sender, RoutedEventArgs e)
         {
+            string str = PlainTextBox.Text;
+            string result = ComATLCryptXiObject.Encrypt(str);
 
+            EncryptedTextBox.Text = result;
         }
 
         private void ButtonDecrypt_Click(object sender, RoutedEventArgs e)
         {
+            string str = EncryptedTextBox.Text;
+            string result = ComATLCryptXiObject.Decrypt(str);
 
+            PlainTextBox.Text = result;
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -85,7 +92,6 @@ namespace CryptXiClient
         private void KeyTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             KeyTextSizeTextBlock.Text = (System.Text.ASCIIEncoding.Unicode.GetByteCount(KeyTextBox.Text) * 8).ToString();
-            //KeyTextSizeTextBlock.Text = KeyTextBox.Text.Length.ToString();
         }
 
         private void PlainTextBox_TextChanged(object sender, TextChangedEventArgs e)
