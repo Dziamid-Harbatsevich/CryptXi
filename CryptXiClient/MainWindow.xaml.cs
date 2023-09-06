@@ -9,13 +9,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
+using System.Xml.Linq;
+using System.Diagnostics;
+using System.Reflection;
+using System.IO;
 
 namespace CryptXiClient
 {
@@ -59,7 +65,149 @@ namespace CryptXiClient
 
         #region File-> Commands
 
+        private RelayCommand openPlainFromFileCommand;
+        public ICommand OpenPlainFromFileCommand => openPlainFromFileCommand ??= new RelayCommand(OpenPlainFromFileExecute);
 
+        private void OpenPlainFromFileExecute(object commandParameter)
+        {
+            MessageBox.Show(commandParameter?.ToString(), "OpenPlainFromFileExecute");
+
+            //// Configure open file dialog box
+            //var dialog = new Microsoft.Win32.OpenFileDialog();
+            //dialog.FileName = "Document"; // Default file name
+            //dialog.DefaultExt = ".txt"; // Default file extension
+            //dialog.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
+
+            //// Show open file dialog box
+            //bool? result = dialog.ShowDialog();
+
+            //// Process open file dialog box results
+            //if (result == true)
+            //{
+            //    // Open document
+            //    string filename = dialog.FileName;
+            //}
+        }
+
+        private RelayCommand openEncryptedFromFileCommand;
+        public ICommand OpenEncryptedFromFileCommand => openEncryptedFromFileCommand ??= new RelayCommand(OpenEncryptedFromFileExecute);
+
+        private void OpenEncryptedFromFileExecute(object commandParameter)
+        {
+            MessageBox.Show(commandParameter?.ToString(), "OpenEncryptedFromFileExecute");
+
+            //// Configure open file dialog box
+            //var dialog = new Microsoft.Win32.OpenFileDialog();
+            //dialog.FileName = "Document"; // Default file name
+            //dialog.DefaultExt = ".txt"; // Default file extension
+            //dialog.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
+
+            //// Show open file dialog box
+            //bool? result = dialog.ShowDialog();
+
+            //// Process open file dialog box results
+            //if (result == true)
+            //{
+            //    // Open document
+            //    string filename = dialog.FileName;
+            //}
+        }
+
+        private RelayCommand savePlainToFileDialogCommand;
+        public ICommand SavePlainToFileDialogCommand => savePlainToFileDialogCommand ??= new RelayCommand(SavePlainToFileDialogExecute);
+
+        private void SavePlainToFileDialogExecute(object commandParameter)
+        {
+            MessageBox.Show(commandParameter?.ToString(), "SavePlainToFileDialogExecute");
+
+            //// Configure save file dialog box
+            //var dialog = new Microsoft.Win32.SaveFileDialog();
+            //dialog.FileName = "Document"; // Default file name
+            //dialog.DefaultExt = ".txt"; // Default file extension
+            //dialog.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
+
+            //// Show save file dialog box
+            //bool? result = dialog.ShowDialog();
+
+            //// Process save file dialog box results
+            //if (result == true)
+            //{
+            //    // Save document
+            //    string filename = dialog.FileName;
+            //}
+        }
+
+        private RelayCommand saveEncryptedToFileDialogCommand;
+        public ICommand SaveEncryptedToFileDialogCommand => saveEncryptedToFileDialogCommand ??= new RelayCommand(SaveEncryptedToFileDialogExecute);
+
+        private void SaveEncryptedToFileDialogExecute(object commandParameter)
+        {
+            MessageBox.Show(commandParameter?.ToString(), "SaveEncryptedToFileDialogExecute");
+
+            //// Configure save file dialog box
+            //var dialog = new Microsoft.Win32.SaveFileDialog();
+            //dialog.FileName = "Document"; // Default file name
+            //dialog.DefaultExt = ".txt"; // Default file extension
+            //dialog.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
+
+            //// Show save file dialog box
+            //bool? result = dialog.ShowDialog();
+
+            //// Process save file dialog box results
+            //if (result == true)
+            //{
+            //    // Save document
+            //    string filename = dialog.FileName;
+            //}
+        }
+
+        private RelayCommand importKeyCommand;
+        public ICommand ImportKeyCommand => importKeyCommand ??= new RelayCommand(ImportKeyExecute);
+
+        private void ImportKeyExecute(object commandParameter)
+        {
+            MessageBox.Show(commandParameter?.ToString(), "ImportKeyExecute");
+
+            //// Configure open file dialog box
+            //var dialog = new Microsoft.Win32.OpenFileDialog();
+            //dialog.FileName = "Document"; // Default file name
+            //dialog.DefaultExt = ".txt"; // Default file extension
+            //dialog.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
+
+            //// Show open file dialog box
+            //bool? result = dialog.ShowDialog();
+
+            //// Process open file dialog box results
+            //if (result == true)
+            //{
+            //    // Open document
+            //    string filename = dialog.FileName;
+            //}
+        }
+
+        private RelayCommand exportKeyCommand;
+        public ICommand ExportKeyCommand => exportKeyCommand ??= new RelayCommand(ExportKeyExecute);
+
+        private void ExportKeyExecute(object commandParameter)
+        {
+            MessageBox.Show(commandParameter?.ToString(), "ExportKeyExecute");
+
+            //// Configure save file dialog box
+            //var dialog = new Microsoft.Win32.SaveFileDialog();
+            //dialog.FileName = "Document"; // Default file name
+            //dialog.DefaultExt = ".txt"; // Default file extension
+            //dialog.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
+
+            //// Show save file dialog box
+            //bool? result = dialog.ShowDialog();
+
+            //// Process save file dialog box results
+            //if (result == true)
+            //{
+            //    // Save document
+            //    string filename = dialog.FileName;
+            //}
+        }
 
         #endregion File-> Commands
 
@@ -81,6 +229,24 @@ namespace CryptXiClient
         private void ExitAppExecute(object commandParameter)
         {
             App.Current.Shutdown();
+        }
+
+        private RelayCommand helpAppCommand;
+        public ICommand HelpAppCommand => helpAppCommand ??= new RelayCommand(HelpAppExecute);
+
+        private void HelpAppExecute(object commandParameter)
+        {
+            var directory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            var file = Path.Combine(directory, "Help.txt");
+
+            if (File.Exists(file))
+            {
+                Process.Start(file);
+            }
+            else
+            {
+                MessageBox.Show("Good Luck!", "Help");
+            }
         }
 
         #endregion General commands

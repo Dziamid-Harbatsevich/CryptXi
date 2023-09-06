@@ -135,6 +135,9 @@
       <EmbedInteropTypes>true</EmbedInteropTypes>
     </COMReference>
     <Content Include="encryptiondatabase_5663.ico" />
+    <Content Include="Help.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

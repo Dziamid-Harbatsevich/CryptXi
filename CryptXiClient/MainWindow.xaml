@@ -13,16 +13,25 @@
         Background="{DynamicResource {x:Static SystemColors.GradientInactiveCaptionBrushKey}}"
         Title="CryptXi" Height="500" Width="800">
 
-
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
-                <MenuItem Header="Open" Command="{Binding OpenFromFileCommand}">
+                <MenuItem Header="Open Plain" Command="{Binding OpenPlainFromFileCommand}">
                     <MenuItem.Icon>
                         <fas:FontAwesome Icon="Regular_File" FontSize="12" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Save As" Command="{Binding SaveToFileDialogCommand}">
+                <MenuItem Header="Open Encrypted" Command="{Binding OpenEncryptedFromFileCommand}">
+                    <MenuItem.Icon>
+                        <fas:FontAwesome Icon="Regular_File" FontSize="12" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Save Plain As" Command="{Binding SavePlainToFileDialogCommand}">
+                    <MenuItem.Icon>
+                        <fas:FontAwesome Icon="Solid_Save" FontSize="12" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Save Encrypted As" Command="{Binding SaveEncryptedToFileDialogCommand}">
                     <MenuItem.Icon>
                         <fas:FontAwesome Icon="Solid_Save" FontSize="12" />
                     </MenuItem.Icon>
@@ -54,11 +63,12 @@
                 <MenuItem Command="Copy" />
                 <MenuItem Command="Paste" />
             </MenuItem>
+            <MenuItem Header="Help" Command="{Binding HelpAppCommand}" />
         </Menu>
 
         <StackPanel Margin="7">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <StackPanel Width="260" Margin="10" VerticalAlignment="Center">
+                <StackPanel Width="320" Margin="10" VerticalAlignment="Center">
                     <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
                         <TextBlock Text="Key Size (&lt;448 bits):" Margin="0,0,3,0" FontSize="14"/>
                         <TextBlock x:Name="KeyTextSizeTextBlock" Text=""/>
@@ -71,16 +81,16 @@
                              BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
-                            <StackPanel HorizontalAlignment="Center">
-                                <TextBlock Text="key kength" FontSize="11"/>
+                            <StackPanel HorizontalAlignment="Center" Margin="10 0">
+                                <TextBlock Text="key length" FontSize="11"/>
                                 <xctk:IntegerUpDown Name="myUpDownControl" Minimum="2" />
                             </StackPanel>
-                            <Button Content="Generate Key" Margin="5" Padding="2 3" Click="ButtonGenerateKey_Click"/>
+                            <Button Content="Generate Key" Margin="10" Padding="4 3" Click="ButtonGenerateKey_Click"/>
                         </StackPanel>
-                        <Button Content="Set Key" Margin="5" Padding="2 3" Click="ButtonSetKey_Click"/>
+                        <Button Content="Set Key" Margin="10" Padding="4 3" Click="ButtonSetKey_Click"/>
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Width="300" Margin="10" materialDesign:BottomDashedLineAdorner.Brush="Black">
+                <StackPanel Width="280" Margin="10" materialDesign:BottomDashedLineAdorner.Brush="Black">
                     <StackPanel Margin="5" Orientation="Horizontal">
                         <TextBlock Text="Plain Text Size (chars):" Margin="0,0,3,0"/>
                         <TextBlock x:Name="PlainTextSizeTextBlock" Text=""/>
@@ -92,7 +102,7 @@
                 </StackPanel>
             </StackPanel>
 
-            <StackPanel Width="600" Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="0,10,0,0">
+            <StackPanel Width="650" Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="0,10,0,0">
                 <TextBox x:Name="PlainTextBox"
                          Width="510"
                          Height="140"
@@ -102,10 +112,20 @@
                          AcceptsReturn="True"
                          TextWrapping="WrapWithOverflow"
                          VerticalScrollBarVisibility="Auto"/>
-                <Button Margin="10 0 0 0" Width="75" Height="40" Content="Encrypt" Foreground="Red" FontWeight="Bold" Click="ButtonEncrypt_Click" Padding="4"/>
+
+                <Button Margin="30 0 0 0"
+                        Width="100" Height="40"
+                        Foreground="Red" FontWeight="Bold"
+                        Click="ButtonEncrypt_Click"
+                        Padding="4">
+                    <StackPanel Orientation="Horizontal">
+                        <fas:FontAwesome Icon="Solid_Lock" Margin="0,0,5,0"/>
+                        <TextBlock>Encrypt</TextBlock>
+                    </StackPanel>
+                </Button>
             </StackPanel>
 
-            <StackPanel Width="600" Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="0,10,0,0">
+            <StackPanel Width="650" Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="0,10,0,0">
                 <TextBox x:Name="EncryptedTextBox"
                          Width="510"
                          Height="140"
@@ -115,8 +135,36 @@
                          AcceptsReturn="True"
                          TextWrapping="WrapWithOverflow"
                          VerticalScrollBarVisibility="Auto"/>
-                <Button Margin="10 0 0 0" Width="75" Height="40" Content="Decrypt" Foreground="Green" FontWeight="Bold" Click="ButtonDecrypt_Click" Padding="4"/>
+
+                <Button Margin="30 0 0 0"
+                        Width="100" Height="40"
+                        Foreground="Green" FontWeight="Bold"
+                        Click="ButtonDecrypt_Click"
+                        Padding="4">
+                    <StackPanel Orientation="Horizontal">
+                        <fas:FontAwesome Icon="Solid_Unlock" Margin="0,0,5,0"/>
+                        <TextBlock>Decrypt</TextBlock>
+                    </StackPanel>
+                </Button>
+
             </StackPanel>
+
+            <ToggleButton x:Name="TogglePopupButton" Height="30" Width="150" HorizontalAlignment="Left">
+                <StackPanel>
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Run Text="Is button toggled? " />
+            <Run Text="{Binding IsChecked, ElementName=TogglePopupButton}" />
+                    </TextBlock>
+
+                    <Popup Name="myPopup" IsOpen="{Binding IsChecked, ElementName=TogglePopupButton}">
+                        <Border BorderThickness="1">
+                            <TextBlock Name="myPopupText" Background="LightBlue" Foreground="Blue" Padding="30">
+                Popup Text
+                            </TextBlock>
+                        </Border>
+                    </Popup>
+                </StackPanel>
+            </ToggleButton>
 
         </StackPanel>
     </DockPanel>
