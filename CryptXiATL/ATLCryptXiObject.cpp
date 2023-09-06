@@ -44,24 +44,24 @@ STDMETHODIMP CATLCryptXiObject::SetKey(BSTR key, BSTR* result)
 	//std::cout << *keyUser << std::endl;
 	//printf_s("keyUser: %s\n", keyUser);
 
-	unsigned char keyDefault[] = "Whatever it says, it is just some code.";
 	Blowfish blowfish;
+	unsigned char keyDefault[] = "somekey";
 	blowfish.SetKey(keyDefault, sizeof(keyDefault));
 
 	// Input/Output length must be a multiple of the block length (64bit)
-	unsigned char text[448];
+	//unsigned char text[448];
 	//memcpy(&text, &cuKeyCharArr, sizeof(cuKeyCharArr));
 	//printf_s("sizeof(cuKeyCharArr): %d\n", sizeof(cuKeyCharArr));
-	//unsigned char text[] = "Hello World Plain Text! Hello World Plain Text! WOW!!! :)";
+	unsigned char text[] = "Hello World Plain Text Inside ATL! :)";
 
 	//blowfish.Encrypt(text, reinterpret_cast<const unsigned char*>(cuKeyCharArr), sizeof(cuKeyCharArr));
-	blowfish.Encrypt(text, cuKeyCharArr, sizeof(cuKeyCharArr));
+	blowfish.Encrypt(text, text, sizeof(text));
 	printf_s("Encrypted: %s\n", text);
 
 	blowfish.Decrypt(text, text, sizeof(text));
 	printf_s("Decrypted: %s\n", text);
 
-	// Convert a _bstr_t string to a CComBSTR string.
+	// Convert unsigned char* string to a CComBSTR string.
 	CComBSTR newResult;
 	newResult.Append((char*)text);
 	*result = newResult;
@@ -75,29 +75,20 @@ STDMETHODIMP CATLCryptXiObject::SetKey(BSTR key, BSTR* result)
 
 STDMETHODIMP CATLCryptXiObject::Encrypt(BSTR PlainText, BSTR* EncryptedText)
 {
-	unsigned char* plain = {};
-	memcpy(&plain, &PlainText, sizeof(PlainText));
-
-	//char* testText = "Hello from Encrypt()!";
-	//plain = (unsigned char*)PlainText;
-	//memcpy(&plain, &testText, sizeof(testText));
-
-	printf_s("plain in Encrypt(): %s\n", plain);
+	//unsigned const char* cuPlainCharArr = (const unsigned char*)PlainText;
 
 	Blowfish blowfish;
-	unsigned char keyDefault[] = "somekey!";
+	unsigned char keyDefault[] = "somekey";
 	blowfish.SetKey(keyDefault, sizeof(keyDefault));
 
-	unsigned char* encrypted = {};
-	blowfish.Encrypt(encrypted, plain, sizeof(encrypted));
-	printf_s("Encrypted in Encrypt(): %s\n", encrypted);
+	unsigned char cuPlainCharArr[] = "Hello World Plain Text Inside ATL! :)";
+	unsigned char encrypted[448];
 
-	blowfish.Decrypt(plain, encrypted, sizeof(plain));
-	printf_s("Decrypted in Encrypt(): %s\n", plain);
+	blowfish.Encrypt(encrypted, cuPlainCharArr, sizeof(cuPlainCharArr));
 
-	// Convert a _bstr_t string to a CComBSTR string.
-	CComBSTR newResult((char*)encrypted);
-
+	// Convert unsigned char* string to a CComBSTR string.
+	CComBSTR newResult;
+	newResult.Append((char*)encrypted);
 	*EncryptedText = newResult;
 
 	return S_OK;
@@ -106,29 +97,21 @@ STDMETHODIMP CATLCryptXiObject::Encrypt(BSTR PlainText, BSTR* EncryptedText)
 
 STDMETHODIMP CATLCryptXiObject::Decrypt(BSTR EncryptedText, BSTR* DecryptedText)
 {
-	/*CComBSTR tmp;
-	tmp.Append(EncryptedText);*/
-	unsigned char* encrypted = {};
-	memcpy(&encrypted, &EncryptedText, sizeof(EncryptedText));
-
-	printf_s("plain in encrypted: %s\n", encrypted);
+	//unsigned const char* cuEncryptedCharArr = (const unsigned char*)EncryptedText;
 
 	Blowfish blowfish;
-
 	unsigned char keyDefault[] = "somekey";
 	blowfish.SetKey(keyDefault, sizeof(keyDefault));
 
-	unsigned char plain[256] = {};
+	unsigned char cuEncryptedCharArr[] = "WH,♂#Φû*⌐g{íâs╜↕)≤µ\8§·VΣ^╞eè╪ÉL! :)";
+	unsigned char plain[448];
 
-	blowfish.Encrypt(encrypted, plain, sizeof(plain));
-	printf_s("Encrypted in Encrypt(): %s\n", encrypted);
-
-	//blowfish.Decrypt(plain, encrypted, sizeof(encrypted));
+	blowfish.Decrypt(plain, cuEncryptedCharArr, sizeof(cuEncryptedCharArr));
 	//printf_s("Decrypted in Decrypt(): %s\n", plain);
 
-	// Convert a _bstr_t string to a CComBSTR string.
-	CComBSTR newResult((char*)plain);
-
+	// Convert unsigned char* string to a CComBSTR string.
+	CComBSTR newResult;
+	newResult.Append((char*)plain);
 	*DecryptedText = newResult;
 
 	return S_OK;

@@ -1,4 +1,5 @@
 ﻿using CryptXiClient.Commands;
+using CryptXiClient.Utils;
 using Interop.CryptXi;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,16 @@ namespace CryptXiClient
     /// </summary>
     public partial class MainWindow : Window
     {
-        public string KeyText { get; set; }
+        const int MAX_CHAR_KEY_LENGTH = 28;
+        private string keyText;
+        public string KeyText
+        {
+            get { return keyText; }
+            set
+            {
+                keyText = value.Substring(0, FilterKeyLength(value.Length));
+            }
+        }
         public string PlaintText { get; set; }
         public string EncryptedText { get; set; }
         private ATLCryptXiObject ComATLCryptXiObject { get; set; }
@@ -37,13 +47,28 @@ namespace CryptXiClient
             EncryptedTextBox.DataContext = EncryptedText;
 
             ComATLCryptXiObject = new ATLCryptXiObject();
+            KeyTextBox.MaxLength = MAX_CHAR_KEY_LENGTH;
+            myUpDownControl.MaxLength = MAX_CHAR_KEY_LENGTH;
             DataContext = this;
         }
 
-        private RelayCommand newCommand;
-        public ICommand NewCommand => newCommand ??= new RelayCommand(NewExecute);
+        private int FilterKeyLength(int length)
+        {
+            return length > MAX_CHAR_KEY_LENGTH || length < 2 ? MAX_CHAR_KEY_LENGTH : length;
+        }
 
-        private void NewExecute(object commandParameter)
+        #region File-> Commands
+
+
+
+        #endregion File-> Commands
+
+        #region General commands
+
+        private RelayCommand resetCommand;
+        public ICommand ResetCommand => resetCommand ??= new RelayCommand(ResetExecute);
+
+        private void ResetExecute(object commandParameter)
         {
             KeyTextBox.Text = "";
             PlainTextBox.Text = "";
@@ -58,6 +83,22 @@ namespace CryptXiClient
             App.Current.Shutdown();
         }
 
+        #endregion General commands
+
+        #region Button Click handlers
+
+        private void ButtonGenerateKey_Click(object sender, RoutedEventArgs e)
+        {
+            int length = MAX_CHAR_KEY_LENGTH;
+            if (myUpDownControl.Value != null)
+            {
+                length = FilterKeyLength((int)myUpDownControl.Value);
+            }
+
+            string keyGenerated = GenerateRandomString.Generate(length);
+            KeyText = keyGenerated;
+            KeyTextBox.Text = KeyText;
+        }
 
         private void ButtonSetKey_Click(object sender, RoutedEventArgs e)
         {
@@ -84,6 +125,10 @@ namespace CryptXiClient
             PlainTextBox.Text = result;
         }
 
+        #endregion Button Click handlers
+
+        #region Event handlers
+
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Marshal.ReleaseComObject(ComATLCryptXiObject);
@@ -103,5 +148,7 @@ namespace CryptXiClient
         {
             EncryptedTextSizeTextBlock.Text = EncryptedTextBox.Text.Length.ToString();
         }
+
+        #endregion Event handlers
     }
 }

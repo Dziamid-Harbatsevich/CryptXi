@@ -12,7 +12,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CryptXiATLPS", "CryptXiATLP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptXiConsoleClient", "CryptXiConsoleClient\CryptXiConsoleClient.csproj", "{AA4F5ABE-5C5B-46D3-899F-088849816770}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptXiClient", "CryptXiClient\CryptXiClient.csproj", "{45B613F6-2840-4C2A-ADB7-65B03F83625C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptXiClient", "CryptXiClient\CryptXiClient.csproj", "{45B613F6-2840-4C2A-ADB7-65B03F83625C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

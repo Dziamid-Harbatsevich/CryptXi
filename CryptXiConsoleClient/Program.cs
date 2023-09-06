@@ -22,11 +22,11 @@ namespace CryptXiConsoleClient
             var result = ComATLCryptXiObject.SetKey(key);
             Console.WriteLine($"Client key: {result}");
 
-            //string encryptedText = ComATLCryptXiObject.Encrypt(textPlain);
-            //Console.WriteLine($"Client encryptedText: {encryptedText}");
+            string encryptedText = ComATLCryptXiObject.Encrypt(textPlain);
+            Console.WriteLine($"Client encryptedText: {encryptedText}");
 
-            //string decryptedText = ComATLCryptXiObject.Decrypt(encryptedText);
-            //Console.WriteLine($"Client decryptedText: {decryptedText}");
+            string decryptedText = ComATLCryptXiObject.Decrypt(encryptedText);
+            Console.WriteLine($"Client decryptedText: {decryptedText}");
 
 
             Console.ReadLine();
