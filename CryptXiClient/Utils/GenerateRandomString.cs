@@ -9,7 +9,7 @@ namespace CryptXiClient.Utils
     internal class GenerateRandomString
     {
         /**
-         * Generates string token from decimal ASCII code range {48; 122}.
+         * Generates string token from decimal ASCII code range {32; 126}.
          */
         public static string Generate(int length = 40)
         {
@@ -21,8 +21,8 @@ namespace CryptXiClient.Utils
             for (int i = 0; i < length; i++)
             {
                 double flt = random.NextDouble();
-                int shift = Convert.ToInt32(Math.Floor(75 * flt));
-                letter = Convert.ToChar(shift + 48);
+                int shift = Convert.ToInt32(Math.Floor(79 * flt));
+                letter = Convert.ToChar(shift + 32);
                 str_build.Append(letter);
             }
 
