@@ -30,8 +30,13 @@ namespace CryptXiClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        internal const string KEYS_DIR_NAME = "keys";
+        internal const string KEY_FILE_PREFIX = "key_";
+        internal const string PLAIN_DIR_NAME = "plain";
+        internal const string PLAIN_FILE_PREFIX = "plain_";
+        internal const string ENCRYPTED_DIR_NAME = "encrypted";
+        internal const string ENCRYPTED_FILE_PREFIX = "encrypted_";
         const int MAX_CHAR_KEY_LENGTH = 28;
-        const string KEYS_DIR_NAME = "keys";
 
         private string keyText;
         public string KeyText
@@ -72,23 +77,11 @@ namespace CryptXiClient
 
         private void OpenPlainFromFileExecute(object commandParameter)
         {
-            MessageBox.Show(commandParameter?.ToString(), "OpenPlainFromFileExecute");
-
-            //// Configure open file dialog box
-            //var dialog = new Microsoft.Win32.OpenFileDialog();
-            //dialog.FileName = "Document"; // Default file name
-            //dialog.DefaultExt = ".txt"; // Default file extension
-            //dialog.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
-
-            //// Show open file dialog box
-            //bool? result = dialog.ShowDialog();
-
-            //// Process open file dialog box results
-            //if (result == true)
-            //{
-            //    // Open document
-            //    string filename = dialog.FileName;
-            //}
+            string? content = Filesystem.GetContentFromFile(PLAIN_DIR_NAME);
+            if (content != null)
+            {
+                PlainTextBox.Text = content;
+            }
         }
 
         private RelayCommand openEncryptedFromFileCommand;
@@ -96,23 +89,11 @@ namespace CryptXiClient
 
         private void OpenEncryptedFromFileExecute(object commandParameter)
         {
-            MessageBox.Show(commandParameter?.ToString(), "OpenEncryptedFromFileExecute");
-
-            //// Configure open file dialog box
-            //var dialog = new Microsoft.Win32.OpenFileDialog();
-            //dialog.FileName = "Document"; // Default file name
-            //dialog.DefaultExt = ".txt"; // Default file extension
-            //dialog.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
-
-            //// Show open file dialog box
-            //bool? result = dialog.ShowDialog();
-
-            //// Process open file dialog box results
-            //if (result == true)
-            //{
-            //    // Open document
-            //    string filename = dialog.FileName;
-            //}
+            string? content = Filesystem.GetContentFromFile(ENCRYPTED_DIR_NAME);
+            if (content != null)
+            {
+                EncryptedTextBox.Text = content;
+            }
         }
 
         private RelayCommand savePlainToFileDialogCommand;
@@ -120,23 +101,10 @@ namespace CryptXiClient
 
         private void SavePlainToFileDialogExecute(object commandParameter)
         {
-            MessageBox.Show(commandParameter?.ToString(), "SavePlainToFileDialogExecute");
-
-            //// Configure save file dialog box
-            //var dialog = new Microsoft.Win32.SaveFileDialog();
-            //dialog.FileName = "Document"; // Default file name
-            //dialog.DefaultExt = ".txt"; // Default file extension
-            //dialog.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
-
-            //// Show save file dialog box
-            //bool? result = dialog.ShowDialog();
-
-            //// Process save file dialog box results
-            //if (result == true)
-            //{
-            //    // Save document
-            //    string filename = dialog.FileName;
-            //}
+            if (PlainTextBox.Text.Length > 0)
+            {
+                Filesystem.PutContentToFile(PLAIN_DIR_NAME, PlainTextBox.Text, PLAIN_FILE_PREFIX);
+            }
         }
 
         private RelayCommand saveEncryptedToFileDialogCommand;
@@ -144,23 +112,10 @@ namespace CryptXiClient
 
         private void SaveEncryptedToFileDialogExecute(object commandParameter)
         {
-            MessageBox.Show(commandParameter?.ToString(), "SaveEncryptedToFileDialogExecute");
-
-            //// Configure save file dialog box
-            //var dialog = new Microsoft.Win32.SaveFileDialog();
-            //dialog.FileName = "Document"; // Default file name
-            //dialog.DefaultExt = ".txt"; // Default file extension
-            //dialog.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
-
-            //// Show save file dialog box
-            //bool? result = dialog.ShowDialog();
-
-            //// Process save file dialog box results
-            //if (result == true)
-            //{
-            //    // Save document
-            //    string filename = dialog.FileName;
-            //}
+            if (EncryptedTextBox.Text.Length > 0)
+            {
+                Filesystem.PutContentToFile(ENCRYPTED_DIR_NAME, EncryptedTextBox.Text, ENCRYPTED_FILE_PREFIX);
+            }
         }
 
         private RelayCommand importKeyCommand;
@@ -168,39 +123,10 @@ namespace CryptXiClient
 
         private void ImportKeyExecute(object commandParameter)
         {
-            string initialDir = Filesystem.NewOrDefaultFolder(KEYS_DIR_NAME);
-
-            // Configure open file dialog box
-            var dialog = new Microsoft.Win32.OpenFileDialog();
-            dialog.InitialDirectory = initialDir;
-            dialog.FileName = "Document"; // Default file name
-            dialog.DefaultExt = ".txt"; // Default file extension
-            dialog.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
-
-            // Show open file dialog box
-            bool? result = dialog.ShowDialog();
-
-            // Process open file dialog box results
-            if (result == true)
+            string? content = Filesystem.GetContentFromFile(KEYS_DIR_NAME);
+            if (content != null)
             {
-                // Open document
-                string filename = dialog.FileName;
-                // Write the content to file
-                using (StreamReader inputFile = new StreamReader(filename))
-                {
-                    var input = inputFile.ReadToEnd();
-                    if (input.ToString().Length > 0)
-                    {
-                        KeyTextBox.Text = input.ToString();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Content not found.",
-                            "Error",
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Error);
-                    }
-                }
+                KeyTextBox.Text = content;
             }
         }
 
@@ -209,28 +135,9 @@ namespace CryptXiClient
 
         private void ExportKeyExecute(object commandParameter)
         {
-            string initialDir = Filesystem.NewOrDefaultFolder(KEYS_DIR_NAME);
-
-            // Configure save file dialog box
-            var dialog = new Microsoft.Win32.SaveFileDialog();
-            dialog.InitialDirectory = initialDir;
-            dialog.FileName = "key_" + DateTime.Now.ToFileTimeUtc();   // Default file name
-            dialog.DefaultExt = ".txt";     // Default file extension
-            dialog.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
-
-            // Show save file dialog box
-            bool? result = dialog.ShowDialog();
-
-            // Process save file dialog box results
-            if (result == true)
+            if (KeyTextBox.Text.Length > 0)
             {
-                // Save document
-                string filename = dialog.FileName;
-                // Write the content to file
-                using (StreamWriter outputFile = new StreamWriter(filename))
-                {
-                    outputFile.Write(KeyTextBox.Text);
-                }
+                Filesystem.PutContentToFile(KEYS_DIR_NAME, KeyTextBox.Text, KEY_FILE_PREFIX);
             }
         }
 
