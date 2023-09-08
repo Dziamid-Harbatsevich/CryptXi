@@ -187,6 +187,11 @@ namespace CryptXiClient
 
         private void ButtonGenerateKey_Click(object sender, RoutedEventArgs e)
         {
+            
+        }
+
+        private void ButtonAutoKey_Click(object sender, RoutedEventArgs e)
+        {
             int length = MAX_CHAR_KEY_LENGTH;
             if (myUpDownControl.Value != null)
             {

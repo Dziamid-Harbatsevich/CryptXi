@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CryptXiClient.Utils.Filesystem">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAQAAAAAAAAAEBAAAAAAA=</HashCode>
+      <FileName>Utils\Filesystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptXiClient.Utils.GenerateRandomString">
+    <Position X="7.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Utils\GenerateRandomString.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptXiClient.Commands.RelayCommand">
+    <Position X="3.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAQAAEIAAABAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Commands\RelayCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

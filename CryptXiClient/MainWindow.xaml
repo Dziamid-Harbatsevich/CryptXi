@@ -68,7 +68,7 @@
 
         <StackPanel Margin="7">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <StackPanel Width="320" Margin="10" VerticalAlignment="Center">
+                <StackPanel Width="400" Margin="10" VerticalAlignment="Center">
                     <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
                         <TextBlock Text="Key Size (&lt;448 bits):" Margin="0,0,3,0" FontSize="14"/>
                         <TextBlock x:Name="KeyTextSizeTextBlock" Text=""/>
@@ -85,8 +85,9 @@
                                 <TextBlock Text="key length" FontSize="11"/>
                                 <xctk:IntegerUpDown Name="myUpDownControl" Minimum="2" />
                             </StackPanel>
-                            <Button Content="Generate Key" Margin="10" Padding="4 3" Click="ButtonGenerateKey_Click"/>
                         </StackPanel>
+                        <Button Content="Gen Key" Margin="10" Padding="4 3" Click="ButtonGenerateKey_Click"/>
+                        <Button Content="Auto Key" Margin="10" Padding="4 3" Click="ButtonAutoKey_Click"/>
                         <Button Content="Set Key" Margin="10" Padding="4 3" Click="ButtonSetKey_Click"/>
                     </StackPanel>
                 </StackPanel>
