@@ -27,8 +27,18 @@ namespace CryptXiConsoleClient
             string keyAscii = System.Text.ASCIIEncoding.ASCII.GetString(System.Text.ASCIIEncoding.ASCII.GetBytes(key));
             int keyAsciiBytesCount = System.Text.ASCIIEncoding.ASCII.GetByteCount(keyAscii);
             Console.WriteLine($"Client keyAsciiBytesCount: {keyAsciiBytesCount}");
-            var result = ComATLCryptXiObject.SetKey(keyAscii);
-            Console.WriteLine($"Client SetKey() result: {result}");
+
+            var resultAscii = ComATLCryptXiObject.SetKey(keyAscii);
+            Console.WriteLine($"Client SetKey() resultAscii: {resultAscii}");
+
+            Console.WriteLine("==================");
+
+            string keyUni = System.Text.ASCIIEncoding.Unicode.GetString(System.Text.ASCIIEncoding.Unicode.GetBytes(key));
+            int keyUniBytesCount = System.Text.ASCIIEncoding.Unicode.GetByteCount(keyUni);
+            Console.WriteLine($"Client keyUniBytesCount: {keyUniBytesCount}");
+
+            var resultUni = ComATLCryptXiObject.SetKey(keyUni);
+            Console.WriteLine($"Client SetKey() resultUni: {resultUni}");
 
             //string encryptedText = ComATLCryptXiObject.Encrypt(textPlain);
             //Console.WriteLine($"Client encryptedText: {encryptedText}");

@@ -25,7 +25,8 @@ STDMETHODIMP CATLCryptXiObject::InterfaceSupportsErrorInfo(REFIID riid)
 	return S_FALSE;
 }
 
-void charToUCharArray(unsigned char** text, char* nstring, size_t charByteSize) {
+static void charToUCharArray(unsigned char** input, char* nstring, size_t charByteSize)
+{
 	unsigned char* result = new unsigned char[charByteSize + 1];
 
 	for (int i = 0; i < charByteSize + 1; i++)
@@ -33,39 +34,48 @@ void charToUCharArray(unsigned char** text, char* nstring, size_t charByteSize) 
 		result[i] = static_cast<unsigned char>(nstring[i]);
 	}
 
-	memcpy(*text, result, charByteSize + 1);
+	memcpy(*input, result, charByteSize + 1);
+
 	delete[] result;
+}
+
+static void castInput(BSTR* key, unsigned char** input, size_t inputByteSize)
+{
+	CComBSTR tmp(*key);
+	char* nstring = new char[inputByteSize];
+	CW2A tmpCW2A(tmp);
+	strcpy_s(nstring, inputByteSize, tmpCW2A);
+
+	charToUCharArray(input, nstring, inputByteSize);
+
+	delete[] nstring;
 }
 
 STDMETHODIMP CATLCryptXiObject::SetKey(BSTR key, BSTR* result)
 {
-	CComBSTR tmp(key);
-	size_t keyByteSize = tmp.ByteLength();
-	char* nstring = new char[keyByteSize];
-	CW2A tmpstr1(tmp);
-	strcpy_s(nstring, keyByteSize, tmpstr1);
+	size_t inputByteSize = SysStringByteLen(key);
+	unsigned char* input = (unsigned char*)malloc(inputByteSize * sizeof(unsigned char));
+	castInput(&key, &input, inputByteSize);
 
 	Blowfish blowfish;
-	unsigned char keyDefault[] = "somekey";
-	blowfish.SetKey(keyDefault, sizeof(keyDefault));
-	
-	unsigned char* text = (unsigned char*)malloc(keyByteSize * sizeof(unsigned char));
-	charToUCharArray(&text, nstring, keyByteSize);
+	//unsigned char keyDefault[] = "somekey";
+	blowfish.SetKey(input, sizeof(input));
 
-	unsigned char* ucBufText = new unsigned char[keyByteSize];
-	blowfish.Encrypt(ucBufText, reinterpret_cast<const unsigned char*>(text), keyByteSize);
+
+	unsigned char* ucBufText = new unsigned char[inputByteSize];
+	blowfish.Encrypt(ucBufText, reinterpret_cast<const unsigned char*>(input), inputByteSize);
 
 	// Debug
 	printf_s("Encrypted: %s\n", ucBufText);
 	std::cout << "Encrypted = " << ucBufText << std::endl;
 	printf_s("Encrypted strlen((char*)ucBufText): %d\n", strlen((char*)ucBufText));
 
-	blowfish.Decrypt(ucBufText, ucBufText, keyByteSize);
+	blowfish.Decrypt(ucBufText, ucBufText, inputByteSize);
 
 	// Debug
 	printf_s("Decrypted: %s\n", ucBufText);
 	std::cout << "Decrypted = " << ucBufText << std::endl;
-	printf_s("Decrypted strlen((char*)text): %d\n", strlen((char*)ucBufText));
+	printf_s("Decrypted strlen((char*)ucBufText): %d\n", strlen((char*)ucBufText));
 
 	// Convert unsigned char* array to a CComBSTR.
 	CComBSTR newResult;
@@ -74,8 +84,7 @@ STDMETHODIMP CATLCryptXiObject::SetKey(BSTR key, BSTR* result)
 	
 	printf("Component::SetKey() says: %S\n", newResult);
 
-	delete[] nstring;
-	free(text);
+	free(input);
 	delete[] ucBufText;
 
 	*result = newResult;
