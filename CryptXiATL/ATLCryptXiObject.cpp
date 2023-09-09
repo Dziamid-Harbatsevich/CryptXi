@@ -28,14 +28,11 @@ STDMETHODIMP CATLCryptXiObject::InterfaceSupportsErrorInfo(REFIID riid)
 static void charToUCharArray(unsigned char** input, char* nstring, size_t charByteSize)
 {
 	unsigned char* result = new unsigned char[charByteSize + 1];
-
 	for (int i = 0; i < charByteSize + 1; i++)
 	{
 		result[i] = static_cast<unsigned char>(nstring[i]);
 	}
-
 	memcpy(*input, result, charByteSize + 1);
-
 	delete[] result;
 }
 
@@ -45,9 +42,7 @@ static void castInput(BSTR* key, unsigned char** input, size_t inputByteSize)
 	char* nstring = new char[inputByteSize];
 	CW2A tmpCW2A(tmp);
 	strcpy_s(nstring, inputByteSize, tmpCW2A);
-
 	charToUCharArray(input, nstring, inputByteSize);
-
 	delete[] nstring;
 }
 
@@ -57,82 +52,66 @@ STDMETHODIMP CATLCryptXiObject::SetKey(BSTR key, BSTR* result)
 	unsigned char* input = (unsigned char*)malloc(inputByteSize * sizeof(unsigned char));
 	castInput(&key, &input, inputByteSize);
 
-	Blowfish blowfish;
-	//unsigned char keyDefault[] = "somekey";
 	blowfish.SetKey(input, sizeof(input));
-
-
-	unsigned char* ucBufText = new unsigned char[inputByteSize];
-	blowfish.Encrypt(ucBufText, reinterpret_cast<const unsigned char*>(input), inputByteSize);
-
-	// Debug
-	printf_s("Encrypted: %s\n", ucBufText);
-	std::cout << "Encrypted = " << ucBufText << std::endl;
-	printf_s("Encrypted strlen((char*)ucBufText): %d\n", strlen((char*)ucBufText));
-
-	blowfish.Decrypt(ucBufText, ucBufText, inputByteSize);
-
-	// Debug
-	printf_s("Decrypted: %s\n", ucBufText);
-	std::cout << "Decrypted = " << ucBufText << std::endl;
-	printf_s("Decrypted strlen((char*)ucBufText): %d\n", strlen((char*)ucBufText));
 
 	// Convert unsigned char* array to a CComBSTR.
 	CComBSTR newResult;
-	_bstr_t bstrt(ucBufText);
-	newResult.Append((LPCSTR)ucBufText);
-	
-	printf("Component::SetKey() says: %S\n", newResult);
+	newResult.Append((LPCSTR)input);
+
+	// Debug
+	//std::cout << "Component::SetKey() says: " << (LPCSTR)ucBufText << std::endl;
 
 	free(input);
-	delete[] ucBufText;
-
 	*result = newResult;
 
 	return S_OK;
 }
 
-
-STDMETHODIMP CATLCryptXiObject::Encrypt(BSTR PlainText, BSTR* EncryptedText)
+STDMETHODIMP CATLCryptXiObject::Encrypt(BSTR plainText, BSTR* encrypted)
 {
-	//unsigned const char* cuPlainCharArr = (const unsigned char*)PlainText;
+	size_t inputByteSize = SysStringByteLen(plainText);
+	unsigned char* input = (unsigned char*)malloc(inputByteSize * sizeof(unsigned char));
+	castInput(&plainText, &input, inputByteSize);
 
-	Blowfish blowfish;
-	unsigned char keyDefault[] = "somekey";
-	blowfish.SetKey(keyDefault, sizeof(keyDefault));
+	unsigned char* ucBufText = new unsigned char[inputByteSize * sizeof(unsigned char)];
+	blowfish.Encrypt(ucBufText, reinterpret_cast<const unsigned char*>(input), inputByteSize);
 
-	unsigned char cuPlainCharArr[] = "Hello World Plain Text Inside ATL! :)";
-	unsigned char encrypted[448];
-
-	blowfish.Encrypt(encrypted, cuPlainCharArr, sizeof(cuPlainCharArr));
-
-	// Convert unsigned char* string to a CComBSTR string.
+	// Convert unsigned char* array to a CComBSTR.
 	CComBSTR newResult;
-	newResult.Append((char*)encrypted);
-	*EncryptedText = newResult;
+	newResult.Append((LPCSTR)ucBufText);
+
+	// Debug
+	std::cout << "Component::Encrypt() says: " << (LPCSTR)ucBufText << std::endl;
+
+	free(input);
+	delete[] ucBufText;
+
+	*encrypted = newResult;
 
 	return S_OK;
 }
 
 
-STDMETHODIMP CATLCryptXiObject::Decrypt(BSTR EncryptedText, BSTR* DecryptedText)
+STDMETHODIMP CATLCryptXiObject::Decrypt(BSTR encrypted, BSTR* decrypted)
 {
-	//unsigned const char* cuEncryptedCharArr = (const unsigned char*)EncryptedText;
+	size_t inputByteSize = SysStringByteLen(encrypted);
+	unsigned char* input = (unsigned char*)malloc(inputByteSize * sizeof(unsigned char));
+	castInput(&encrypted, &input, inputByteSize);
 
-	Blowfish blowfish;
-	unsigned char keyDefault[] = "somekey";
-	blowfish.SetKey(keyDefault, sizeof(keyDefault));
+	unsigned char* ucBufText = new unsigned char[inputByteSize * sizeof(unsigned char)];
+	blowfish.Decrypt(ucBufText, reinterpret_cast<const unsigned char*>(input), inputByteSize);
 
-	unsigned char cuEncryptedCharArr[] = "WH,♂#Φû*⌐g{íâs╜↕)≤µ\8§·VΣ^╞eè╪ÉL! :)";
-	unsigned char plain[448];
-
-	blowfish.Decrypt(plain, cuEncryptedCharArr, sizeof(cuEncryptedCharArr));
-	//printf_s("Decrypted in Decrypt(): %s\n", plain);
-
-	// Convert unsigned char* string to a CComBSTR string.
+	// Convert unsigned char* array to a CComBSTR.
 	CComBSTR newResult;
-	newResult.Append((char*)plain);
-	*DecryptedText = newResult;
+	newResult.Append((LPCSTR)ucBufText);
+
+	// Debug
+	std::cout << "Component::Decrypt() ucBufText says: " << (LPCSTR)ucBufText << std::endl;
+
+	free(input);
+	delete[] ucBufText;
+
+	*decrypted = newResult;
 
 	return S_OK;
 }

@@ -56,7 +56,7 @@ END_COM_MAP()
 
 public:
 
-
+	Blowfish blowfish{};
 
 	STDMETHOD(SetKey)(BSTR key, BSTR* result);
 	STDMETHOD(Encrypt)(BSTR PlainText, BSTR* EncryptedText);
